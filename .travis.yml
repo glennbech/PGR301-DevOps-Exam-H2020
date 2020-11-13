@@ -1,4 +1,5 @@
-services: docker
+services:
+  - docker
 env:
   global:
     - GCP_PROJECT_ID=pgr301-devops-exam-monster
