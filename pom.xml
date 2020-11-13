@@ -184,7 +184,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>monster-collections</finalName>
+                    <finalName>pgr301-exam-monsters</finalName>
                 </configuration>
             </plugin>
             <plugin>
