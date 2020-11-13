@@ -5,5 +5,5 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 FROM openjdk:8-jdk-alpine
-COPY --from=builder /app/target/*.jar /app/application.jar
-ENTRYPOINT ["kotlin","-jar","/app/application.jar"]
+COPY --from=builder /app/target/*.jar /app/application.jar/
+ENTRYPOINT ["java","-jar","/app/application.jar"]
