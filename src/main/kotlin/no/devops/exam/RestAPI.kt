@@ -1,5 +1,7 @@
 package no.devops.exam
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.DistributionSummary
 import io.micrometer.core.instrument.MeterRegistry
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -23,16 +25,22 @@ import org.springframework.web.bind.annotation.*
 class RestAPI(
         @Autowired
         private val monsterService: MonsterService,
-        /*@Autowired
-        private val meterRegistry: MeterRegistry,*/
-        @Autowired
-        private val monsterRepository: MonsterRepository
 
+        @Autowired
+        private val monsterRepository: MonsterRepository,
+
+        @Autowired
+        private var meterRegistry: MeterRegistry
 ) {
 
 
-    //private val creationCounter = Counter.builder("counter.metersCreated").description("Meters created").register(meterRegistry)
-    //private val notFoundCreation = Counter.builder("counter.meterNotFound").description("Meter not found").register(meterRegistry)
+    private val creationCounter = Counter.builder("counter.metersCreated").description("Meters created").register(meterRegistry)
+    private val notFoundCreation = Counter.builder("counter.meterNotFound").description("Meter not found").register(meterRegistry)
+    private val monsterRaritySummary = DistributionSummary.builder("distribution.monsterRarity")
+            .description("MonsterRarity Distribution")
+            .baseUnit("rarity")
+            .publishPercentiles(0.3, 0.5, 0.95)
+            .register(meterRegistry)
 
     @GetMapping("/api/monsters")
     fun listMonsters(): ResponseEntity<List<Monster>> {
@@ -50,7 +58,7 @@ class RestAPI(
 
         val monster = monsterService.findByIdEager(monsterid)
         if (monster == null) {
-            //notFoundCreation.increment()
+            notFoundCreation.increment()
             return ResponseEntity.notFound().build()
         }
         return ResponseEntity.status(200).body(DtoConverter.transform(monster))
@@ -62,7 +70,9 @@ class RestAPI(
             @PathVariable("monsterId") monsterId: String
     ): ResponseEntity<Void> {
         val ok = monsterService.registerNewMonster(monsterId)
+        creationCounter.increment()
         return if (!ok) ResponseEntity.status(400).build()
         else ResponseEntity.status(201).build()
+
     }
 }

@@ -1,5 +1,6 @@
 package no.devops.exam.db
 
+import io.micrometer.core.instrument.MeterRegistry
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,10 +16,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 internal class MonsterServiceTest {
 
     @Autowired
-    private lateinit var meterRepository: MonsterRepository
+    private lateinit var monsterService: MonsterService
 
     @Autowired
-    private lateinit var monsterService: MonsterService
+    private lateinit var meterRegistry: MeterRegistry
 
     @Autowired
     private lateinit var monsterRepository: MonsterRepository
@@ -31,6 +32,7 @@ internal class MonsterServiceTest {
     @Test
     fun createMonster() {
         val id = "WargreymonFoo"
+        val counter = meterRegistry.counter("counter.monsterCreated")
 
         assertTrue(monsterService.registerNewMonster(id))
         assertTrue(monsterRepository.existsById(id))

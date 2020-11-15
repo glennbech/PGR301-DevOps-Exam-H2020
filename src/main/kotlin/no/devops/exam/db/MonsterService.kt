@@ -18,12 +18,6 @@ interface MonsterRepository : CrudRepository<Monster, String> {
 
 }
 
-@Repository
-interface MonsterRarityRepository : CrudRepository<MonsterRarity, String> {
-    @Query("SELECT avg(rarity) FROM MonsterRarity")
-    fun calcRarity(): Double
-}
-
 @Service
 @Transactional
 class MonsterService(

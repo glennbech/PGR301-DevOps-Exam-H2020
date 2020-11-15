@@ -30,8 +30,8 @@ internal class RestAPITest {
     @Autowired
     private lateinit var monsterRepository: MonsterRepository
 
-    /*@Autowired
-    private lateinit var meterRegistry: MeterRegistry*/
+    @Autowired
+    private lateinit var meterRegistry: MeterRegistry
 
     @PostConstruct
     fun init() {
@@ -59,10 +59,13 @@ internal class RestAPITest {
     @Test
     fun testCreateMonster() {
         val id = "MetalgarurumonBar"
+        val counter = meterRegistry.counter("counter.meterNotFound")
+        assertEquals(counter.count(), 0.0)
 
         given().put("/$id")
                 .then()
                 .statusCode(201)
+
 
         assertTrue(monsterRepository.existsById(id))
     }
