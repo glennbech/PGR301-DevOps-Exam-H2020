@@ -1,5 +1,6 @@
 package no.devops.exam
 
+import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.DistributionSummary
 import io.micrometer.core.instrument.MeterRegistry
@@ -41,6 +42,7 @@ class RestAPI(
             .publishPercentiles(0.3, 0.5, 0.95)
             .register(meterRegistry)
 
+    @Timed("List monsters", longTask = true)
     @GetMapping("/api/monsters")
     fun listMonsters(): ResponseEntity<List<Monster>> {
         val monsters = monsterRepository.findAll()
@@ -49,6 +51,7 @@ class RestAPI(
     }
 
 
+    @Timed
     @ApiOperation("Retrieve Monster information on a specific monster")
     @GetMapping(path = ["/{monsterId}"])
     fun getMonsterInfo(
@@ -64,6 +67,7 @@ class RestAPI(
         return ResponseEntity.status(200).body(DtoConverter.transform(monster))
     }
 
+    @Timed
     @ApiOperation("Create a new monster, with given ID")
     @PutMapping(path = ["/{monsterId}"])
     fun createMonster(
@@ -77,7 +81,8 @@ class RestAPI(
 
     }
 
-    @PostMapping(path = ["/tx"], consumes = ["application/json"], produces = ["application/json"])
+    @Timed
+    @PostMapping(path = ["/monster"], consumes = ["application/json"], produces = ["application/json"])
     fun addMember(@RequestBody monster: Monster) {
         meterRegistry.counter("count3", "currency", monster.monsterId).increment()
     }
