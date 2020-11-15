@@ -99,6 +99,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-influx</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+
         <!-- Logz.io -->
 
         <dependency>

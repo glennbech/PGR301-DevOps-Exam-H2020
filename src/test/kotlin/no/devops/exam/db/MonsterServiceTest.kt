@@ -1,7 +1,6 @@
 package no.devops.exam.db
 
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,6 +13,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 internal class MonsterServiceTest {
+
+    @Autowired
+    private lateinit var meterRepository: MonsterRepository
 
     @Autowired
     private lateinit var monsterService: MonsterService
@@ -29,6 +31,7 @@ internal class MonsterServiceTest {
     @Test
     fun createMonster() {
         val id = "WargreymonFoo"
+
         assertTrue(monsterService.registerNewMonster(id))
         assertTrue(monsterRepository.existsById(id))
     }

@@ -1,5 +1,6 @@
 package no.devops.exam
 
+import io.micrometer.core.instrument.MeterRegistry
 import io.restassured.RestAssured
 import io.restassured.RestAssured.given
 import no.devops.exam.db.MonsterRepository
@@ -28,6 +29,9 @@ internal class RestAPITest {
 
     @Autowired
     private lateinit var monsterRepository: MonsterRepository
+
+    /*@Autowired
+    private lateinit var meterRegistry: MeterRegistry*/
 
     @PostConstruct
     fun init() {
