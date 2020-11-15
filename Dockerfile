@@ -4,5 +4,6 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn package -DskipTests
 
-COPY target/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar .
-CMD java -jar ./PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar
+FROM openjdk:8-jdk-alpine
+COPY --from=builder /app/target/*.jar /app/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/app/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar"]
