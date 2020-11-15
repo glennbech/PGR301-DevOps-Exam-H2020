@@ -8,9 +8,3 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
-management:
-  metrics:
-    export:
-      influx:
-        enabled: false
-

@@ -33,7 +33,6 @@ class RestAPI(
         private var meterRegistry: MeterRegistry
 ) {
 
-
     private val creationCounter = Counter.builder("counter.metersCreated").description("Meters created").register(meterRegistry)
     private val notFoundCreation = Counter.builder("counter.meterNotFound").description("Meter not found").register(meterRegistry)
     private val monsterRaritySummary = DistributionSummary.builder("distribution.monsterRarity")
@@ -61,6 +60,7 @@ class RestAPI(
             notFoundCreation.increment()
             return ResponseEntity.notFound().build()
         }
+        meterRegistry.gauge("TestGauge", 3)
         return ResponseEntity.status(200).body(DtoConverter.transform(monster))
     }
 
@@ -71,8 +71,14 @@ class RestAPI(
     ): ResponseEntity<Void> {
         val ok = monsterService.registerNewMonster(monsterId)
         creationCounter.increment()
+        meterRegistry.gauge("TestGauge2", 3)
         return if (!ok) ResponseEntity.status(400).build()
         else ResponseEntity.status(201).build()
 
+    }
+
+    @PostMapping(path = ["/tx"], consumes = ["application/json"], produces = ["application/json"])
+    fun addMember(@RequestBody monster: Monster) {
+        meterRegistry.counter("count3", "currency", monster.monsterId).increment()
     }
 }

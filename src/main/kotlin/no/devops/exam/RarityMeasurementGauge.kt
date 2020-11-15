@@ -24,6 +24,4 @@ class RarityMeasurementGauge(
             value
         }
     }
-
-
 }
