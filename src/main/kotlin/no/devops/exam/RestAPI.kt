@@ -75,7 +75,7 @@ class RestAPI(
     ): ResponseEntity<Void> {
         val ok = monsterService.registerNewMonster(monsterId)
         creationCounter.increment()
-        meterRegistry.gauge("TestGauge2", 3)
+        meterRegistry.gauge("TestGauge2", 5)
         return if (!ok) ResponseEntity.status(400).build()
         else ResponseEntity.status(201).build()
 
@@ -85,5 +85,6 @@ class RestAPI(
     @PostMapping(path = ["/monster"], consumes = ["application/json"], produces = ["application/json"])
     fun addMember(@RequestBody monster: Monster) {
         meterRegistry.counter("count3", "currency", monster.monsterId).increment()
+        meterRegistry.gauge("TestGauge", 4)
     }
 }
