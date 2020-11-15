@@ -5,5 +5,5 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 FROM openjdk:8-jdk-alpine
-COPY --from=builder /app/target/*.jar /app/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar
+COPY --from=builder /app/target/*.jar /app/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar/
 ENTRYPOINT ["java","-jar","/app/PGR301-DevOps-Exam-H2020-1.0-SNAPSHOT.jar"]
