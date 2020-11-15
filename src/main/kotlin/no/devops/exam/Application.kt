@@ -14,9 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 
 @SpringBootApplication(scanBasePackages = ["no.devops.exam"])
-@EnableJpaRepositories("no.devops.exam")
-@EntityScan("no.devops.exam")
-@EnableSwagger2
 class Application {
 
     @Bean
