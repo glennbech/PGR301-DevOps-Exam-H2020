@@ -9,14 +9,13 @@ import org.springframework.stereotype.Component
 
 @Component
 class RarityMeasurementGauge(
+        @Autowired
+        private var monsterRarityRepository: MonsterRarityRepository,
+
+        @Autowired
+        private var meterRegistry: MeterRegistry
 
 ) : ApplicationListener<ApplicationReadyEvent> {
-
-    @Autowired
-    private lateinit var monsterRarityRepository: MonsterRarityRepository
-
-    @Autowired
-    private lateinit var meterRegistry: MeterRegistry
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         meterRegistry.gauge("Monster Rarity Calculation", monsterRarityRepository) {

@@ -4,14 +4,14 @@ import io.micrometer.core.annotation.Timed
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.DistributionSummary
 import io.micrometer.core.instrument.MeterRegistry
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import no.devops.exam.db.*
-import no.devops.exam.dto.MonsterDto
+import io.micrometer.core.instrument.Tag
+import no.devops.exam.db.Monster
+import no.devops.exam.db.MonsterRarity
+import no.devops.exam.db.MonsterRarityRepository
+import no.devops.exam.db.MonsterRepository
 import no.devops.exam.dto.RarityDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -26,7 +26,7 @@ class RestAPIController(
         private var monsterRarityRepository: MonsterRarityRepository
 ) {
 
-    private val creationCounter = Counter.builder("counter.metersCreated").description("Meters created").register(meterRegistry)
+    private val creationCounter = Counter.builder("counter.metersCreated").description("Monsters meters created").register(meterRegistry)
     private val notFoundCreation = Counter.builder("counter.meterNotFound").description("Meter not found").register(meterRegistry)
     private val monsterRaritySummary = DistributionSummary.builder("distribution.monsterRarity")
             .description("MonsterRarity Distribution")
@@ -39,6 +39,7 @@ class RestAPIController(
     @Timed("List monsters", longTask = true)
     fun listMonsters(): ResponseEntity<List<Monster>> {
         val monsters = monsterRepository.findAll()
+
 
         return ResponseEntity.status(200).body(monsters.toList())
     }
