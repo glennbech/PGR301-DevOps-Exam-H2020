@@ -1,13 +1,17 @@
 package no.devops.exam.db
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import java.util.*
 import javax.persistence.*
-import javax.validation.constraints.NotBlank
 
 @Entity
-@Table(name = "monster_data")
-class Monster(
+data class Monster(
 
-        @get:Id
-        @get:NotBlank
-        var monsterId: String? = null
+        @JsonManagedReference
+        @OneToMany(mappedBy = "monster", fetch = FetchType.EAGER)
+        var rarity: List<MonsterRarity> = emptyList(),
+
+        @Id
+        @GeneratedValue
+        var monsterId: UUID? = null
 )
