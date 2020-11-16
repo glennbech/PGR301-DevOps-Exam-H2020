@@ -14,7 +14,7 @@ before_install:
   - gcloud config set project "${GCP_PROJECT_ID}"
 install: true # no-op
 script:
-  - |
+  - |-
     set -ex;
     docker build -t "${IMAGE}:${TRAVIS_COMMIT}" . && \
     docker push "${IMAGE}:${TRAVIS_COMMIT}" && \
