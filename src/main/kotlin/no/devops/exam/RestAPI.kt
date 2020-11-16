@@ -6,11 +6,11 @@ import io.micrometer.core.instrument.DistributionSummary
 import io.micrometer.core.instrument.MeterRegistry
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import no.devops.exam.db.Monster
-import no.devops.exam.db.MonsterRepository
-import no.devops.exam.db.MonsterService
+import no.devops.exam.db.*
 import no.devops.exam.dto.MonsterDto
+import no.devops.exam.dto.RarityDto
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -31,7 +31,10 @@ class RestAPI(
         private val monsterRepository: MonsterRepository,
 
         @Autowired
-        private var meterRegistry: MeterRegistry
+        private var meterRegistry: MeterRegistry,
+
+        @Autowired
+        private var monsterRarityRepository: MonsterRarityRepository
 ) {
 
     private val creationCounter = Counter.builder("counter.metersCreated").description("Meters created").register(meterRegistry)
@@ -43,13 +46,12 @@ class RestAPI(
             .register(meterRegistry)
 
     @Timed("List monsters", longTask = true)
-    @GetMapping("/api/monsters")
+    @GetMapping("/monsters")
     fun listMonsters(): ResponseEntity<List<Monster>> {
         val monsters = monsterRepository.findAll()
 
         return ResponseEntity.status(200).body(monsters.toList())
     }
-
 
     @Timed
     @ApiOperation("Retrieve Monster information on a specific monster")
@@ -78,8 +80,18 @@ class RestAPI(
         meterRegistry.gauge("TestGauge2", 5)
         return if (!ok) ResponseEntity.status(400).build()
         else ResponseEntity.status(201).build()
-
     }
+
+   /* @PostMapping("/monsters")
+    @Timed
+    fun createMonsterPOST(): ResponseEntity<Monster> {
+
+        val monster = monsterRepository.save(Monster())
+
+        creationCounter.increment()
+
+        return ResponseEntity.ok(monster)
+    }*/
 
     @Timed
     @PostMapping(path = ["/monster"], consumes = ["application/json"], produces = ["application/json"])
@@ -87,4 +99,39 @@ class RestAPI(
         meterRegistry.counter("count3", "currency", monster.monsterId).increment()
         meterRegistry.gauge("TestGauge", 4)
     }
+
+    @PostMapping("/monsters/{monsterId}/rarities")
+    @Timed
+    fun createRarity(@PathVariable("monsterId") monsterId: String, @RequestBody rarityVariables: RarityDto): ResponseEntity<Monster> {
+
+        val monster = monsterRepository.findByIdOrNull(monsterId)
+        if (monster == null) {
+            notFoundCreation.increment()
+            return ResponseEntity.status(404).body(null)
+        }
+
+        monsterRarityRepository.save(MonsterRarity(
+                rarityVariables.rarity,
+                rarityVariables.startValue,
+                rarityVariables.endValue,
+                monster
+        ))
+        monsterRaritySummary.record(rarityVariables.rarity.toDouble())
+
+        return ResponseEntity.ok(monsterRepository.findByIdOrNull(monsterId)!!)
+
+    }
+
+    /*@GetMapping("/monsters/{monsterId}/rarities")
+    @Timed
+    fun getRarities(@PathVariable("monsterId") monsterId: String): ResponseEntity<List<MonsterRarity>> {
+
+        val monster = monsterRepository.findByIdOrNull(monsterId)
+        if (monster == null) {
+            notFoundCreation.increment()
+            return ResponseEntity.status(404).body(null)
+        }
+        return ResponseEntity.ok(monster.rarity.toList())
+    }*/
+
 }

@@ -10,11 +10,11 @@ data class MonsterRarity(
         var startValue: Float? = null,
         var endValue: Float? = null,
 
-        @Id
-        var id: String? = null,
-
         @JsonBackReference
         @ManyToOne
         @JoinColumn(name = "monster_id", nullable = false)
-        var monster: Monster? = null
+        var monster: Monster? = null,
+
+        @Id
+        var id: String? = null
 )

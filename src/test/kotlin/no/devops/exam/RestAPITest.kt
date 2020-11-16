@@ -5,6 +5,7 @@ import io.restassured.RestAssured
 import io.restassured.RestAssured.given
 import no.devops.exam.db.MonsterRepository
 import no.devops.exam.db.MonsterService
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,6 +34,8 @@ internal class RestAPITest {
     @Autowired
     private lateinit var meterRegistry: MeterRegistry
 
+
+
     @PostConstruct
     fun init() {
         RestAssured.baseURI = "http://localhost"
@@ -45,6 +48,7 @@ internal class RestAPITest {
     fun initTest() {
         monsterRepository.deleteAll()
     }
+
 
     @Test
     fun testGetMonster() {
@@ -65,7 +69,6 @@ internal class RestAPITest {
         given().put("/$id")
                 .then()
                 .statusCode(201)
-
 
         assertTrue(monsterRepository.existsById(id))
     }

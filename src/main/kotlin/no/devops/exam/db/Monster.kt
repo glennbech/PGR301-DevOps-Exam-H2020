@@ -10,11 +10,13 @@ import javax.validation.constraints.NotBlank
 @Entity
 data class Monster(
 
+        /*@JsonManagedReference
+        @OneToMany(mappedBy = "monster", fetch = FetchType.EAGER)
+        var rarity: List<MonsterRarity> = emptyList(),*/
+
         @get:Id
         @get:NotBlank
         var monsterId: String? = null
 
-        /*@JsonManagedReference
-        @OneToMany(mappedBy = "monster", fetch = FetchType.EAGER)
-        var rarity: List<MonsterRarity> = emptyList()*/
+
 )

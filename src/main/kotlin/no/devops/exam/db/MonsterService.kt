@@ -1,6 +1,5 @@
 package no.devops.exam.db
 
-import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
@@ -11,10 +10,6 @@ import javax.persistence.LockModeType
 
 @Repository
 interface MonsterRepository : CrudRepository<Monster, String> {
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT m FROM Monster m WHERE m.monsterId = :id")
-    fun lockedFind(@Param("id") monsterID: String): Monster?
 
 }
 
