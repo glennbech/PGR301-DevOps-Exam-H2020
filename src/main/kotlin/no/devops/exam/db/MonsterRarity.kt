@@ -6,9 +6,10 @@ import javax.persistence.*
 
 @Entity
 data class MonsterRarity(
-        var rarity: Int? = null,
+
         var startValue: Float? = null,
         var endValue: Float? = null,
+        var rarity: Int? = null,
 
         @JsonBackReference
         @ManyToOne
@@ -16,5 +17,6 @@ data class MonsterRarity(
         var monster: Monster? = null,
 
         @Id
-        var id: String? = null
+        @GeneratedValue
+        var id: UUID? = null
 )
