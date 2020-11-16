@@ -2,7 +2,7 @@
 <configuration>
     <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
-    <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
+    <appender name="LOGZIO" class="io.logz.logback.LogzioLogbackAppender">
         <token>$LOGZ_TOKEN</token>
         <logzioUrl>$LOGZ_URL</logzioUrl>
         <logzioType>myType</logzioType>
@@ -19,7 +19,7 @@
     </appender>
 
     <root level="info">
-        <appender-ref ref="LOGZIO"/>
+        <appender-ref ref="LOGZIO" />
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

@@ -40,7 +40,7 @@ internal class RestAPIControllerTest {
         assertThat(restApiController.listMonsters().body).isNotNull.hasSize(1);
     }
 
-    @Test
+    /*@Test
     fun createMonster() {
         assertThat(monsterRepository.count()).isEqualTo(0)
 
@@ -51,7 +51,7 @@ internal class RestAPIControllerTest {
         assertThat(counter.count()).isEqualTo(1.0)
 
         assertThat(monsterRepository.count()).isEqualTo(1)
-    }
+    }*/
 
     @Test
     fun createRarities() {
