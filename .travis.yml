@@ -3,7 +3,7 @@ services:
 env:
   global:
     - GCP_PROJECT_ID=pgr301-devops-exam-monster
-    - IMAGE=gcr.io/pgr301-devops-exam-monster/pgr301-exam-monsters
+    - IMAGE=gcr.io/pgr301-devops-exam-monster/pgr301-exam-monsters@sha256:42eeb383cc2a4e0e8da3a5176e78f4b8fb6283db4c091b45b2a49f2243ab6934
     - CLOUD_RUN_SERVICE=devops-jonpus-gcp
     - CLOUD_RUN_REGION=europe-north1
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -24,5 +24,4 @@ script:
     set -ex;
     docker build -t "${IMAGE}:${TRAVIS_COMMIT}" . && \
     docker push "${IMAGE}:${TRAVIS_COMMIT}" && \
-
     set +x
