@@ -1,19 +1,17 @@
 package no.devops.exam
 
-import groovy.transform.AutoImplement
 import io.micrometer.core.instrument.MeterRegistry
 import no.devops.exam.db.Monster
 import no.devops.exam.db.MonsterRarity
 import no.devops.exam.db.MonsterRarityRepository
 import no.devops.exam.db.MonsterRepository
 import no.devops.exam.dto.RarityDto
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.test.annotation.DirtiesContext
-import org.springframework.web.bind.annotation.RestController
 
 
 @SpringBootTest
