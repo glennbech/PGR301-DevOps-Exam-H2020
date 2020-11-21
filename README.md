@@ -1,6 +1,10 @@
 # PGR301-DevOps-Exam-H2020
 Github Repository for H2020 DevOps Class PGR301 Exam, Application Github
 
+`Eksamen i PGR301 DevOps i skyen, kandidatnummer: 10007`
+
+Denne repositoryen er koblet sammen med min Github repository [JonPus/PGR301-DevOps-Exam-H2020](https://github.com/JonPus/PGR301-DevOps-Exam-H2020)
+
 **Travis CI Builder:**  
 - [![Build Status](https://travis-ci.com/JonPus/PGR301-DevOps-Exam-H2020.svg?token=WNYDyxATS1ezQLqAT1RT&branch=master)](https://travis-ci.com/JonPus/PGR301-DevOps-Exam-H2020)
 
@@ -40,5 +44,5 @@ For at dette prosjektet skal fungere på **Google Cloud: Cloud Computing Service
 
 - `creationCounter`: counter.metersCreated
 - `notFoundCreation`: counter.metersNotFound
-- `monsterRaritySummsary` = "distribution.monsterRarity
+- `monsterRaritySummsary` = "distribution.monsterRarity"
 - `meterRegistry.com` = "Monster Rarity Calculation"
