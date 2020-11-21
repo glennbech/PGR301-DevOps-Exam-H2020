@@ -1,3 +1,6 @@
 .idea
 target/
 google-key.json
+influxdb/meta
+influxdb/data
+influxdb/wal
