@@ -21,7 +21,7 @@ API Endpoints er som følger:
 
 **Rarities - Sjeldenhent basert på monstre:**
 - `GET`: https://cloudrun-srv2-nmg2ikrwja-uc.a.run.app/monsters/{monsterId}/rarities - Henter ut rarities via monsterId
-- `POST`: https://cloudrun-srv2-nmg2ikrwja-uc.a.run.app/monsters/{monsterId}/rarities - - Legger til rarities via monsterId
+- `POST`: https://cloudrun-srv2-nmg2ikrwja-uc.a.run.app/monsters/{monsterId}/rarities - Legger til rarities via monsterId
 
 ### Google Cloud 
 
