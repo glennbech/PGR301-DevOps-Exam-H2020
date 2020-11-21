@@ -103,5 +103,4 @@ class RestAPIController(
         }
         return ResponseEntity.ok(monster.rarity.toList())
     }
-
 }
