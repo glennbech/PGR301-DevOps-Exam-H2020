@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class RestAPIController(
         @Autowired
         private val monsterRepository: MonsterRepository,
-        @Autowired
+        @Auto   wired
         private var meterRegistry: MeterRegistry,
         @Autowired
         private var monsterRarityRepository: MonsterRarityRepository
